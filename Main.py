@@ -23,14 +23,28 @@ except Exception as e: input(f"Error while importing\n-> {e}")
 if platform.system() == "Windows": pass 
 else: input(f"Sorry only windows is supported ur on {platform.system()}, considel using a vm tho Enter to exit"); exit()
 
+class create:
+    os.makedirs("data", exist_ok=True)
+    os.makedirs("data/YTDownloader", exist_ok=True)
+    data = {
+        "Random titles": True,
+        "Title delay": "5",
+        "Use some random weird-looking title shit?": False
+    }
+    if os.path.exists("config.json"):
+        pass
+    else:
+        with open("config.json", 'w') as f:
+            json.dump(data, f, indent=4)
+        input("Needed files and folders were created. Please reopen the file.")
+
 class cfg:
-    hugrfegrihe = Fore.RED; guhrhg9uergiherih = Fore.MAGENTA
     with open("config.json", "r") as f:
         cfg = json.load(f)
     random_titles_state = cfg.get("Random titles")
-    title_deleay = cfg.get("Title deleay")
-    try: title_deleay = int(title_deleay)
-    except: input(f"{hugrfegrihe}>{guhrhg9uergiherih} Sorry this title delay can't be used")
+    title_delay = cfg.get("Title delay")
+    try: title_delay = int(title_delay)
+    except Exception as e: input(f"Error while converting the title deleay to a usable format -> {e}")
     wiried_title_state = cfg.get("Use some random wiried ahh looking title shit?")
 
 class run:
@@ -213,7 +227,7 @@ class gui:
             ctypes.windll.kernel32.SetConsoleTitleW(random.choice(titles))
             time.sleep(deleay)
 
-    thread1 = threading.Thread(target=title_changer, args=(cfg.random_titles_state, cfg.title_deleay, cfg.wiried_title_state,))
+    thread1 = threading.Thread(target=title_changer, args=(cfg.random_titles_state, cfg.title_delay, cfg.wiried_title_state,))
     thread1.start()
     subprocess.check_call('mode con: cols=150 lines=30', shell=True)
     while True:
