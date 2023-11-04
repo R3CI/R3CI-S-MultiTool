@@ -6,7 +6,7 @@
 </h1>
 
 <h1 align="center">
-  Preview (V1.0)
+  Preview (V1.2)
 </h1>
 
 <div align="center">
