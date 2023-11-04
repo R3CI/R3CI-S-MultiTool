@@ -1,6 +1,0 @@
-Remember ONLY windows is supported
-
-If u get errors try this
-
-1. Get the error and try to understand it (search it up how do get a error from a py file)
-2. Try deleating the config.json and the data folder that also could be the issue
