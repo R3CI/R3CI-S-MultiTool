@@ -18,7 +18,7 @@
 ## [V1.0]
 - Release
 
-- ## [V1.1]
+## [V1.1]
 - Now it will auto create the folders and the cfg file + writes needed things to it
 - Exe release
 - Added a troubeshoting file
