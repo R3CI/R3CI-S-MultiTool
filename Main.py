@@ -16,6 +16,7 @@ try:
     import psutil
     import serial
     import string
+    import qrcode
     import json
     import time
     import os
@@ -26,16 +27,32 @@ else: input(f"Sorry only windows is supported ur on {platform.system()}, conside
 class create:
     os.makedirs("data", exist_ok=True)
     os.makedirs("data/YTDownloader", exist_ok=True)
-    data = {
-        "Random titles": True,
-        "Title delay": "5",
-        "Use some random weird-looking title shit?": False
-    }
+    os.makedirs("data/QRCodeGenerator", exist_ok=True)
     if os.path.exists("config.json"):
         pass
     else:
+        data = '''{
+        "Random titles": true,
+        "Title delay": "5",
+        "Use some random weird-looking title shit?": false
+        }'''
         with open("config.json", 'w') as f:
             json.dump(data, f, indent=4)
+        input("Needed files and folders were created. Please reopen the file.")
+    if os.path.exists("READ.txt"):
+        pass
+    else:
+        data = """
+Remember ONLY windows is supported
+
+If u get errors try this
+
+1. Get the error and try to understand it (search it up how do get a error from a py file)
+2. Try deleating the config.json and the data folder that also could be the issue
+
+"""
+        with open("READ.txt", 'w') as f:
+            f.write(data)
         input("Needed files and folders were created. Please reopen the file.")
 
 class cfg:
@@ -122,7 +139,49 @@ class run:
                 print(f"{y}>{pl} Total Size: {partition_usage.total // (1024**3)} GB")
                 print(f"{y}>{pl} Used: {partition_usage.used // (1024**3)} GB")
                 print(f"{y}>{pl} Free: {partition_usage.free // (1024**3)} GB")
-            except Exception: print(f"Error while getting disk info -> {e}")
+            except Exception: print(f"{r}>{pl} Error while getting disk info -> {e}")
+
+    def MakeARequest(url, method, payload, header, loop):
+        # I dont even know if this will work correctly i dont have any request to test it on
+        if loop == "y":
+            while True:
+                try:
+                    if payload and header: response = requests.request(method, url, json=payload, headers=header)
+                    elif payload: response = requests.request(method, url, json=payload)
+                    elif header: response = requests.request(method, url, headers=header)
+                    else: response = requests.request(method, url)
+                    
+                    if response.status_code: print(f"{y}>{pl} Status code -> {response.status_code}")
+                    if response.json(): print(f"{y}>{pl} Response -> {response.json()}")
+
+                except Exception as e:
+                    print(f"{r}>{pl} Error while doing a request -> {e}")
+        else:
+            while True:
+                try:
+                    if payload and header: response = requests.request(method, url, json=payload, headers=header)
+                    elif payload: response = requests.request(method, url, json=payload)
+                    elif header: response = requests.request(method, url, headers=header)
+                    else: response = requests.request(method, url)
+                    
+                    if response.status_code: print(f"{y}>{pl} Status code -> {response.status_code}")
+                    if response.json(): print(f"{y}>{pl} Response -> {response.json()}")
+
+                except Exception as e:
+                    print(f"{r}>{pl} Error while doing a request -> {e}")
+    
+    def QRGenerator(data, name):
+        qr = qrcode.QRCode(
+            version=1,
+            error_correction=qrcode.constants.ERROR_CORRECT_H,
+            box_size=10,
+            border=4,
+        )
+        qr.add_data(data)
+        qr.make(fit=True)
+        img = qr.make_image(fill_color="black", back_color="white")
+        img.save(f"data\QRCodeGenerator\{name}.png")
+        os.startfile("data\QRCodeGenerator")
 
 r = Fore.RED
 y = Fore.LIGHTYELLOW_EX
@@ -239,8 +298,8 @@ class gui:
         {pl}<{p}3{pl}> {pl}-> {p}Fake wifi signals       {pl}<{p}12{pl}> {pl}-> {p}???
         {pl}<{p}4{pl}> {pl}-> {p}Youtube downloader      {pl}<{p}13{pl}> {pl}-> {p}???
         {pl}<{p}5{pl}> {pl}-> {p}Specs info              {pl}<{p}14{pl}> {pl}-> {p}???
-        {pl}<{p}6{pl}> {pl}-> {pl}???                     {pl}<{p}15{pl}> {pl}-> {pl}???
-        {pl}<{p}7{pl}> {pl}-> {pl}???                     {pl}<{p}16{pl}> {pl}-> {pl}???
+        {pl}<{p}6{pl}> {pl}-> {pl}Request                 {pl}<{p}15{pl}> {pl}-> {pl}???
+        {pl}<{p}7{pl}> {pl}-> {pl}QR code maker           {pl}<{p}16{pl}> {pl}-> {pl}???
         {pl}<{p}8{pl}> {pl}-> {pl}???                     {pl}<{p}17{pl}> {pl}-> {pl}???
         {pl}<{p}9{pl}> {pl}-> {pl}???                     {pl}<{p}18{pl}> {pl}-> {pl}???
 
@@ -289,6 +348,23 @@ class gui:
         elif c == "5":
             os.system("cls"); print(banner)
             run.GetSpecs()
+            input(f"\n{y}>{pl} Waiting...")
+        
+        elif c == "6":
+            os.system("cls"); print(banner)
+            url = input(f"URL {res}>{pl} ")
+            method = input(f"Method {res}>{pl} ")
+            payload = input(f"Payload/json (blank if none) {res}>{pl} ")
+            header = input(f"Header (blank if none) {res}>{pl} ")
+            loop = input(f"Loop the request? (y/n) {res}>{pl} ")
+            run.MakeARequest(url, method, payload, header, loop)
+            input(f"\n{y}>{pl} Waiting...")
+
+        elif c == "7":
+            os.system("cls"); print(banner)
+            url = input(f"URL {res}>{pl} ")
+            name = input(f"File name {res}>{pl} ")
+            run.QRGenerator(url, name)
             input(f"\n{y}>{pl} Waiting...")
 
         else: input(f"{r}>{pl} Sorry! This option does not exist")
