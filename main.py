@@ -1,4 +1,4 @@
-version = "1.31"
+version = "1.4"
 import os
 try:
     from googletrans import Translator
