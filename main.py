@@ -1,17 +1,16 @@
 version = "1.31"
 import os
 try:
+    from googletrans import Translator
     from pywifi import PyWiFi, const
     from pytube import YouTube
     from colorama import Fore
     import subprocess
     import webbrowser
     import threading
-    import fileinput
     import datetime
     import requests
     import platform
-    import secrets
     import ctypes
     import pywifi
     import random
@@ -25,27 +24,15 @@ try:
 except Exception as e:
     input(f"Error while importing: {e}\nPress enter to install required pacages")
     imports = [
-    "pywifi", 
     "pytube",
     "colorama",
-    "subprocess",
-    "webbrowser",
-    "threading",
-    "fileinput",
     "datetime",
     "requests",
-    "platform",
-    "secrets",
-    "ctypes",
     "pywifi",
-    "random",
     "psutil",
     "serial",
-    "string",
     "qrcode",
-    "json",
-    "time",
-    "os"
+    "googletrans==4.0.0-rc1"
     ]
     i = 0
     for imp in imports:
@@ -56,6 +43,14 @@ except Exception as e:
 
 if platform.system() == "Windows": pass 
 else: input(f"Sorry only windows is supported ur on {platform.system()}, considel using a vm tho Enter to exit"); exit()
+
+r = Fore.RED
+y = Fore.LIGHTYELLOW_EX
+g = Fore.GREEN
+res = Fore.RESET
+p = Fore.LIGHTMAGENTA_EX
+pl = Fore.MAGENTA
+b = Fore.LIGHTBLACK_EX
 
 class autoupdate:
     def get_version():
@@ -211,22 +206,22 @@ class run:
     
     def GetSpecs():
         print(f"\n{g}>{pl} CPU INFO")
-        print(f"{y}>{pl} CPU Cores -> {psutil.cpu_count(logical=False)}")
-        print(f"{y}>{pl} CPU Threads -> {psutil.cpu_count(logical=True)}")
-        print(f"{y}>{pl} CPU Frequency -> {psutil.cpu_freq().current}Mhz")
+        print(f"{y}>{pl} CPU Cores: {psutil.cpu_count(logical=False)}")
+        print(f"{y}>{pl} CPU Threads: {psutil.cpu_count(logical=True)}")
+        print(f"{y}>{pl} CPU Frequency: {psutil.cpu_freq().current}Mhz")
 
         print(f"\n{g}>{pl} RAM INFO")
         memory = psutil.virtual_memory()
-        print(f"{y}>{pl} Total -> {memory.total // (1024**3)} GB")
-        print(f"{y}>{pl} Available -> {memory.available // (1024**3)} GB")
-        print(f"{y}>{pl} Used -> {memory.used // (1024**3)} GB")
-        print(f"{y}>{pl} Free -> {memory.free // (1024**3)} GB")
+        print(f"{y}>{pl} Total: {memory.total // (1024**3)} GB")
+        print(f"{y}>{pl} Available: {memory.available // (1024**3)} GB")
+        print(f"{y}>{pl} Used: {memory.used // (1024**3)} GB")
+        print(f"{y}>{pl} Free: {memory.free // (1024**3)} GB")
 
         print(f"\n{g}>{pl} DISK INFO")
         partitions = psutil.disk_partitions()
         for partition in partitions:
-            print(f"{y}>{pl} Device -> {partition.device}")
-            print(f"{y}>{pl} Mountpoint -> {partition.mountpoint}")
+            print(f"{y}>{pl} Device: {partition.device}")
+            print(f"{y}>{pl} Mountpoint: {partition.mountpoint}")
             try:
                 partition_usage = psutil.disk_usage(partition.mountpoint)
                 print(f"{y}>{pl} Total Size: {partition_usage.total // (1024**3)} GB")
@@ -244,11 +239,11 @@ class run:
                     elif header: response = requests.request(method, url, headers=header)
                     else: response = requests.request(method, url)
                     
-                    if response.status_code: print(f"{y}>{pl} Status code -> {response.status_code}")
-                    if response.json(): print(f"{y}>{pl} Response -> {response.json()}")
+                    if response.status_code: print(f"{y}>{pl} Status code: {response.status_code}")
+                    if response.json(): print(f"{y}>{pl} Response: {response.json()}")
 
                 except Exception as e:
-                    print(f"{r}>{pl} Error while doing a request -> {e}")
+                    print(f"{r}>{pl} Error while doing a request: {e}")
         else:
             while True:
                 try:
@@ -257,11 +252,11 @@ class run:
                     elif header: response = requests.request(method, url, headers=header)
                     else: response = requests.request(method, url)
                     
-                    if response.status_code: print(f"{y}>{pl} Status code -> {response.status_code}")
-                    if response.json(): print(f"{y}>{pl} Response -> {response.json()}")
+                    if response.status_code: print(f"{y}>{pl} Status code: {response.status_code}")
+                    if response.json(): print(f"{y}>{pl} Response: {response.json()}")
 
                 except Exception as e:
-                    print(f"{r}>{pl} Error while doing a request -> {e}")
+                    print(f"{r}>{pl} Error while doing a request: {e}")
     
     def QRGenerator(data, name):
         qr = qrcode.QRCode(
@@ -276,14 +271,18 @@ class run:
         img.save(f"data\QRCodeGenerator\{name}.png")
         os.startfile("data\QRCodeGenerator")
 
-r = Fore.RED
-y = Fore.LIGHTYELLOW_EX
-g = Fore.GREEN
-res = Fore.RESET
-p = Fore.LIGHTMAGENTA_EX
-pl = Fore.MAGENTA
-b = Fore.LIGHTBLACK_EX
+    def Translate(text,target_language='en'):
+        translator = Translator()
+        translation = translator.translate(text, dest=target_language)
+        return translation.text
 
+    def Calculate(problem):
+        try:
+            result = eval(problem)
+        except Exception as e:
+            input(f"{r}>{pl} Failed error: {e}")
+        try: return result
+        except: pass
 
 class render:
     subprocess.check_call('mode con: cols=150 lines=30', shell=True)
@@ -402,8 +401,8 @@ class render:
 {'╭─────────────────────────────────────────────────────────────────────────────────────────────╮'.center(size)}
 {'│ «01» Pinger            «06» Request            «11» ???              «16» ???               │'.center(size)}
 {'│ «02» Bluetooth attack  «07» QR code maker      «12» ???              «17» ???               │'.center(size)}
-{'│ «03» Fake wifi         «08» ???                «13» ???              «18» ???               │'.center(size)}
-{'│ «04» Yt downloader     «09» ???                «14» ???              «19» ???               │'.center(size)}
+{'│ «03» Fake wifi         «08» Translator         «13» ???              «18» ???               │'.center(size)}
+{'│ «04» Yt downloader     «09» Calculator         «14» ???              «19» ???               │'.center(size)}
 {'│ «05» Specs info        «10» ???                «15» ???              «20» ???               │'.center(size)}
 {'╰─────────────────────────────────────────────────────────────────────────────────────────────╯'.center(size)}
 """
@@ -474,6 +473,23 @@ class render:
             url = input(f"URL {res}>{pl} ")
             name = input(f"File name {res}>{pl} ")
             run.QRGenerator(url, name)
+            input(f"\n{y}>{pl} Waiting...")
+
+        elif c == "8":
+            os.system("cls"); print(banner)
+            text = input(f"Text {res}>{pl} ")
+            lang = input(f"Language {res}>{pl} ")
+            try:
+                translated_text = run.Translate(text, lang)
+            except Exception as e: print(f"{r}>{pl} Failed to translate error: {e}")
+            print(f"{g}>{pl} Translated text: {translated_text}")
+            input(f"\n{y}>{pl} Waiting...")
+        
+        elif c == "9":
+            os.system("cls"); print(banner)
+            problem = input(f"Problem {res}>{pl} ")
+            result = run.Calculate(problem)
+            print(result)
             input(f"\n{y}>{pl} Waiting...")
 
         else: input(f"{r}>{pl} Sorry! This option does not exist")
