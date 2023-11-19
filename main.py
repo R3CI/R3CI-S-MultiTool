@@ -1,4 +1,4 @@
-version = "1.3"
+version = "1.31"
 import os
 try:
     from pywifi import PyWiFi, const
@@ -70,7 +70,7 @@ class autoupdate:
             return None, None
         
     def check_for_update(locall, github, changelog):
-        if locall > github: pass
+        if locall == github: pass
         else:
             os.system("cls")
             size = os.get_terminal_size().columns
@@ -87,7 +87,7 @@ class autoupdate:
                 update_banner = update_banner.replace(edge, f"{Fore.MAGENTA}{edge}{Fore.RESET}")
             print(update_banner)
             print(f"{Fore.MAGENTA}Current version: {Fore.RESET}{locall}{Fore.MAGENTA}\nNewest version: {Fore.RESET}{github}{Fore.MAGENTA}\n")
-            input(f"{Fore.MAGENTA}New features:{Fore.RESET}{changelog}")
+            input(f"{Fore.MAGENTA}New features:\n{Fore.RESET}{changelog}")
             webbrowser.open(f"https://github.com/R3CI/R3CI-S-MultiTool/releases/tag/{github}")
             exit()
     
