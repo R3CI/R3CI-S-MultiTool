@@ -71,24 +71,26 @@ class autoupdate:
     def check_for_update(locall, github, changelog):
         if locall == github: pass
         else:
-            os.system("cls")
-            size = os.get_terminal_size().columns
-            edges = ["╗", "║", "╚", "╝", "═", "╔"]
-            update_banner = f"""
-{'███╗   ██╗███████╗██╗    ██╗    ██╗   ██╗██████╗ ██████╗  █████╗ ████████╗███████╗██╗'.center(size)}
-{'████╗  ██║██╔════╝██║    ██║    ██║   ██║██╔══██╗██╔══██╗██╔══██╗╚══██╔══╝██╔════╝██║'.center(size)}
-{'██╔██╗ ██║█████╗  ██║ █╗ ██║    ██║   ██║██████╔╝██║  ██║███████║   ██║   █████╗  ██║'.center(size)}
-{'██║╚██╗██║██╔══╝  ██║███╗██║    ██║   ██║██╔═══╝ ██║  ██║██╔══██║   ██║   ██╔══╝  ╚═╝'.center(size)}
-{'██║ ╚████║███████╗╚███╔███╔╝    ╚██████╔╝██║     ██████╔╝██║  ██║   ██║   ███████╗██╗'.center(size)}
-{'╚═╝  ╚═══╝╚══════╝ ╚══╝╚══╝      ╚═════╝ ╚═╝     ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚══════╝╚═╝'.center(size)}                                                                                                     
-"""
-            for edge in edges:
-                update_banner = update_banner.replace(edge, f"{red}{edge}{lred}")
-            print(update_banner)
-            print(f"{lred}Current version: {res}{locall}{lred}\nNewest version: {res}{github}{lred}\n")
-            input(f"{lred}New features:\n{Fore.RESET}{changelog}")
-            webbrowser.open(f"https://github.com/R3CI/R3CI-S-MultiTool/releases/tag/{github}")
-            exit()
+            if locall > github: pass
+            else:
+                os.system("cls")
+                size = os.get_terminal_size().columns
+                edges = ["╗", "║", "╚", "╝", "═", "╔"]
+                update_banner = f"""{lred}
+    {'███╗   ██╗███████╗██╗    ██╗    ██╗   ██╗██████╗ ██████╗  █████╗ ████████╗███████╗██╗'.center(size)}
+    {'████╗  ██║██╔════╝██║    ██║    ██║   ██║██╔══██╗██╔══██╗██╔══██╗╚══██╔══╝██╔════╝██║'.center(size)}
+    {'██╔██╗ ██║█████╗  ██║ █╗ ██║    ██║   ██║██████╔╝██║  ██║███████║   ██║   █████╗  ██║'.center(size)}
+    {'██║╚██╗██║██╔══╝  ██║███╗██║    ██║   ██║██╔═══╝ ██║  ██║██╔══██║   ██║   ██╔══╝  ╚═╝'.center(size)}
+    {'██║ ╚████║███████╗╚███╔███╔╝    ╚██████╔╝██║     ██████╔╝██║  ██║   ██║   ███████╗██╗'.center(size)}
+    {'╚═╝  ╚═══╝╚══════╝ ╚══╝╚══╝      ╚═════╝ ╚═╝     ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚══════╝╚═╝'.center(size)}                                                                                                     
+    """
+                for edge in edges:
+                    update_banner = update_banner.replace(edge, f"{red}{edge}{lred}")
+                print(update_banner)
+                print(f"{lred}Current version: {res}{locall}{lred}\nNewest version: {res}{github}{lred}\n")
+                input(f"{lred}New features:\n{red}{changelog}")
+                webbrowser.open(f"https://github.com/R3CI/R3CI-S-MultiTool/releases/tag/{github}")
+                exit()
     
     gh_version, changelog = get_version()
     local_version = version
