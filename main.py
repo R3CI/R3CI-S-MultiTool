@@ -1,5 +1,9 @@
-version = "1.4"
+import ctypes
 import os
+ctypes.windll.kernel32.SetConsoleTitleW("Loading...")
+print("Loading... please wait")
+version = "1.5"
+discord = "https://discord.gg/vTsvhtNR"
 try:
     from googletrans import Translator
     from pywifi import PyWiFi, const
@@ -40,17 +44,17 @@ except Exception as e:
         os.system("cls")
         os.system(f"pip install {imp}")
         print(f"Pacage {imp} installed {i}/22")
-
 if platform.system() == "Windows": pass 
 else: input(f"Sorry only windows is supported ur on {platform.system()}, considel using a vm tho Enter to exit"); exit()
 
-r = Fore.RED
-y = Fore.LIGHTYELLOW_EX
-g = Fore.GREEN
+red = Fore.RED
+lred = Fore.LIGHTRED_EX
+yellow = Fore.LIGHTYELLOW_EX
+green = Fore.GREEN
 res = Fore.RESET
-p = Fore.LIGHTMAGENTA_EX
-pl = Fore.MAGENTA
-b = Fore.LIGHTBLACK_EX
+purple = Fore.LIGHTMAGENTA_EX
+magenta = Fore.MAGENTA
+black = Fore.LIGHTBLACK_EX
 
 class autoupdate:
     def get_version():
@@ -79,10 +83,10 @@ class autoupdate:
 {'╚═╝  ╚═══╝╚══════╝ ╚══╝╚══╝      ╚═════╝ ╚═╝     ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚══════╝╚═╝'.center(size)}                                                                                                     
 """
             for edge in edges:
-                update_banner = update_banner.replace(edge, f"{Fore.MAGENTA}{edge}{Fore.RESET}")
+                update_banner = update_banner.replace(edge, f"{red}{edge}{lred}")
             print(update_banner)
-            print(f"{Fore.MAGENTA}Current version: {Fore.RESET}{locall}{Fore.MAGENTA}\nNewest version: {Fore.RESET}{github}{Fore.MAGENTA}\n")
-            input(f"{Fore.MAGENTA}New features:\n{Fore.RESET}{changelog}")
+            print(f"{lred}Current version: {res}{locall}{lred}\nNewest version: {res}{github}{lred}\n")
+            input(f"{lred}New features:\n{Fore.RESET}{changelog}")
             webbrowser.open(f"https://github.com/R3CI/R3CI-S-MultiTool/releases/tag/{github}")
             exit()
     
@@ -153,10 +157,30 @@ class cfg:
     except Exception as e: input(f"Error reading the config: {e}\nFirst time running?"); exit()
 
 class run:
-    def CheckIP(ip):
+    def send_a_suggestion(author, suggestion):
+        valid = False
+        wb = "https://discord.com/api/webhooks/1178756355499241482/xSePgUa1-zxEFZ2WBhkOXnIeCJsmXs9qBxfIm-umcOhW1Dm7OHLw8xw-f93BXGINjDrN"
+        try:
+            valid = True
+            r = requests.head(wb, timeout=5)
+            r.raise_for_status()
+        except:
+            valid = False
+            print(f"{red}> {lred}Sorry, the webhook seems to be deleted. Try joining my discord and suggesting there.")
+
+        if valid:
+            payload = {"content": f"<@1125147653970337896>\nNew suggestion!\nAuthor: {author}\nSuggestion: {suggestion}"}
+            headers = {"Content-Type": "application/json"}
+            r = requests.post(wb, data=json.dumps(payload), headers=headers)
+            if r.status_code == 204:
+                print(f"{green}> {lred}Message sent successfully!")
+            else:
+                print(f"{red}> {lred}Failed to send the suggestion")
+    
+    def check_ip(ip):
         os.system(f"ping {ip}")
     
-    def BluetoothAttack(COMXX, baudrate, data):
+    def make_a_bluetooth(COMXX, baudrate, data):
         # Funfact I myself dont know how do use this lol
         while True:
             try:
@@ -164,17 +188,17 @@ class run:
                 ser.write(data)
                 ser.close()
             except Exception as e:
-                print(f"{g}>{pl} Error while getting a connection: {e}")
+                print(f"{green}>{purple} Error while getting a connection: {e}")
     
-    def FakeWifiSignals(name, numb, wait):
+    def make_a_fake_wifi(name, numb, wait):
         # Not tested or anyhtign dont know if it even works or should lol
         wifi = pywifi.PyWiFi()
         adapters = wifi.interfaces()
         if not adapters: input("Sorry no wifi adapters found!"); exit()
         else: 
-            print(f"{y}>{pl} Anvaible adapters: \n")
+            print(f"{yellow}>{purple} Anvaible adapters: \n")
             for _, adapter in enumerate(adapters ):
-                print(f"{g}>{pl}Adapter {_}: {adapter.name()}")
+                print(f"{green}>{purple}Adapter {_}: {adapter.name()}")
         for _ in range(numb):
             time.sleep(wait)
             iface = wifi.interfaces()[0]
@@ -185,51 +209,51 @@ class run:
             profile.cipher = const.CIPHER_TYPE_NONE
             temp = iface.add_network_profile(profile)
             iface.connect(temp)
-            if iface.status() == const.IFACE_CONNECTED: print(f"{g}>{pl} Created: {name}")
-            else: print(f"{r}>{pl} Failed status: {iface.status()}")
+            if iface.status() == const.IFACE_CONNECTED: print(f"{green}>{purple} Created: {name}")
+            else: print(f"{red}>{purple} Failed status: {iface.status()}")
     
-    def YoutubeVideoDownloader(url):
+    def download_video_from_youtube(url):
         def progress(stream, chunk, remaining):
             # Tbh this progress shit was from chat gpt bc i didint know how to do it and i dont have time for research
             total = stream.filesize
             downloaded = total - remaining
             percentage = (downloaded / total) * 100
-            print(f"{y}>{pl} Downloading... {percentage:.2f}%")
+            print(f"{yellow}>{purple} Downloading... {percentage:.2f}%")
         try:
             yt = YouTube(url, on_progress_callback=progress)
             video = yt.streams.filter(progressive=True, file_extension='mp4').first()
             video.download("data/YTDownloader")
-            print(f"{g}>{pl} Succes!")
+            print(f"{green}>{purple} Succes!")
             os.startfile("data\YTDownloader")
         except Exception as e:
-            print(f"{r}>{pl} Error downloading: {e}")
+            print(f"{red}>{purple} Error downloading: {e}")
     
-    def GetSpecs():
-        print(f"\n{g}>{pl} CPU INFO")
-        print(f"{y}>{pl} CPU Cores: {psutil.cpu_count(logical=False)}")
-        print(f"{y}>{pl} CPU Threads: {psutil.cpu_count(logical=True)}")
-        print(f"{y}>{pl} CPU Frequency: {psutil.cpu_freq().current}Mhz")
+    def get_specs():
+        print(f"\n{green}>{purple} CPU INFO")
+        print(f"{yellow}>{purple} CPU Cores: {psutil.cpu_count(logical=False)}")
+        print(f"{yellow}>{purple} CPU Threads: {psutil.cpu_count(logical=True)}")
+        print(f"{yellow}>{purple} CPU Frequency: {psutil.cpu_freq().current}Mhz")
 
-        print(f"\n{g}>{pl} RAM INFO")
+        print(f"\n{green}>{purple} RAM INFO")
         memory = psutil.virtual_memory()
-        print(f"{y}>{pl} Total: {memory.total // (1024**3)} GB")
-        print(f"{y}>{pl} Available: {memory.available // (1024**3)} GB")
-        print(f"{y}>{pl} Used: {memory.used // (1024**3)} GB")
-        print(f"{y}>{pl} Free: {memory.free // (1024**3)} GB")
+        print(f"{yellow}>{purple} Total: {memory.total // (1024**3)} GB")
+        print(f"{yellow}>{purple} Available: {memory.available // (1024**3)} GB")
+        print(f"{yellow}>{purple} Used: {memory.used // (1024**3)} GB")
+        print(f"{yellow}>{purple} Free: {memory.free // (1024**3)} GB")
 
-        print(f"\n{g}>{pl} DISK INFO")
+        print(f"\n{green}>{purple} DISK INFO")
         partitions = psutil.disk_partitions()
         for partition in partitions:
-            print(f"{y}>{pl} Device: {partition.device}")
-            print(f"{y}>{pl} Mountpoint: {partition.mountpoint}")
+            print(f"{yellow}>{purple} Device: {partition.device}")
+            print(f"{yellow}>{purple} Mountpoint: {partition.mountpoint}")
             try:
                 partition_usage = psutil.disk_usage(partition.mountpoint)
-                print(f"{y}>{pl} Total Size: {partition_usage.total // (1024**3)} GB")
-                print(f"{y}>{pl} Used: {partition_usage.used // (1024**3)} GB")
-                print(f"{y}>{pl} Free: {partition_usage.free // (1024**3)} GB")
-            except Exception: print(f"{r}>{pl} Error while getting disk info -> {e}")
+                print(f"{yellow}>{purple} Total Size: {partition_usage.total // (1024**3)} GB")
+                print(f"{yellow}>{purple} Used: {partition_usage.used // (1024**3)} GB")
+                print(f"{yellow}>{purple} Free: {partition_usage.free // (1024**3)} GB")
+            except Exception: print(f"{red}>{purple} Error while getting disk info -> {e}")
 
-    def MakeARequest(url, method, payload, header, loop):
+    def request(url, method, payload, header, loop):
         # I dont even know if this will work correctly i dont have any request to test it on
         if loop == "y":
             while True:
@@ -239,11 +263,11 @@ class run:
                     elif header: response = requests.request(method, url, headers=header)
                     else: response = requests.request(method, url)
                     
-                    if response.status_code: print(f"{y}>{pl} Status code: {response.status_code}")
-                    if response.json(): print(f"{y}>{pl} Response: {response.json()}")
+                    if response.status_code: print(f"{yellow}>{purple} Status code: {response.status_code}")
+                    if response.json(): print(f"{yellow}>{purple} Response: {response.json()}")
 
                 except Exception as e:
-                    print(f"{r}>{pl} Error while doing a request: {e}")
+                    print(f"{red}>{purple} Error while doing a request: {e}")
         else:
             while True:
                 try:
@@ -252,13 +276,13 @@ class run:
                     elif header: response = requests.request(method, url, headers=header)
                     else: response = requests.request(method, url)
                     
-                    if response.status_code: print(f"{y}>{pl} Status code: {response.status_code}")
-                    if response.json(): print(f"{y}>{pl} Response: {response.json()}")
+                    if response.status_code: print(f"{yellow}>{yellow} Status code: {response.status_code}")
+                    if response.json(): print(f"{yellow}>{yellow} Response: {response.json()}")
 
                 except Exception as e:
-                    print(f"{r}>{pl} Error while doing a request: {e}")
+                    print(f"{red}>{yellow} Error while doing a request: {e}")
     
-    def QRGenerator(data, name):
+    def generate_a_qr_code(data, name):
         qr = qrcode.QRCode(
             version=1,
             error_correction=qrcode.constants.ERROR_CORRECT_H,
@@ -271,16 +295,16 @@ class run:
         img.save(f"data\QRCodeGenerator\{name}.png")
         os.startfile("data\QRCodeGenerator")
 
-    def Translate(text,target_language='en'):
+    def translate(text,target_language='en'):
         translator = Translator()
         translation = translator.translate(text, dest=target_language)
         return translation.text
 
-    def Calculate(problem):
+    def calculate(problem):
         try:
             result = eval(problem)
         except Exception as e:
-            input(f"{r}>{pl} Failed error: {e}")
+            input(f"{red}>{yellow} Failed error: {e}")
         try: return result
         except: pass
 
@@ -302,7 +326,7 @@ class render:
                 titles = [
                 "Thanks for using my multitool",
                 "Made with love by R3CI",
-                "Discord -> https://discord.gg/5cgQmfNj6W",
+                "Discord -> https://discord.gg/vTsvhtNR",
                 "This repo -> https://github.com/R3CI/R3CI-S-MultiTool",
                 "My discord user is -> r3ci.",
                 f"Its {timee} rightnow",
@@ -365,7 +389,8 @@ class render:
                 "Just waiting for the old senson of fn to download",
                 "Next week will be the worst one that i ever had",
                 "Jebac rosyjski i ta babe od niego",
-                "Zdrastfujcie"
+                "Zdrastfujcie",
+                "Havent updated those in a bit"
                 ]
                 ctypes.windll.kernel32.SetConsoleTitleW(random.choice(titles))
                 time.sleep(deleay)
@@ -380,116 +405,177 @@ class render:
         os.system("cls")
         def asci_render(size):
             global banner
-            # podjebalem z heliuma ale tylko dlatego bo chcialem ten border ok???
-            edges = ["╗", "║", "╚", "╝", "═", "╔"]
-            banner = f"""
-{'██████╗ ██████╗  ██████╗██╗    ███████╗    ███╗   ███╗██╗   ██╗██╗  ████████╗██╗████████╗ ██████╗  ██████╗ ██╗     '.center(size)}
-{'██╔══██╗╚════██╗██╔════╝██║    ██╔════╝    ████╗ ████║██║   ██║██║  ╚══██╔══╝██║╚══██╔══╝██╔═══██╗██╔═══██╗██║     '.center(size)}
-{'██████╔╝ █████╔╝██║     ██║    ███████╗    ██╔████╔██║██║   ██║██║     ██║   ██║   ██║   ██║   ██║██║   ██║██║     '.center(size)}
-{'██╔══██╗ ╚═══██╗██║     ██║    ╚════██║    ██║╚██╔╝██║██║   ██║██║     ██║   ██║   ██║   ██║   ██║██║   ██║██║     '.center(size)}
-{'██║  ██║██████╔╝╚██████╗██║    ███████║    ██║ ╚═╝ ██║╚██████╔╝███████╗██║   ██║   ██║   ╚██████╔╝╚██████╔╝███████╗'.center(size)}
-{'╚═╝  ╚═╝╚═════╝  ╚═════╝╚═╝    ╚══════╝    ╚═╝     ╚═╝ ╚═════╝ ╚══════╝╚═╝   ╚═╝   ╚═╝    ╚═════╝  ╚═════╝ ╚══════╝'.center(size)}
-{pl}Made by R3CI <3                                                                                                              
+            edges = ["░", "▒"] 
+            banner = f"""{Fore.LIGHTRED_EX}
+{' ██▀███   ▄████▄   ██▓     ██████     ███▄ ▄███▓ █    ██  ██▓  ▄▄▄█████▓ ██▓▄▄▄█████▓ ▒█████   ▒█████   ██▓    '.center(size)}
+{'▓██ ▒ ██▒▒██▀ ▀█  ▓██▒   ▒██    ▒    ▓██▒▀█▀ ██▒ ██  ▓██▒▓██▒  ▓  ██▒ ▓▒▓██▒▓  ██▒ ▓▒▒██▒  ██▒▒██▒  ██▒▓██▒    '.center(size)}
+{'▓██ ░▄█ ▒▒▓█    ▄ ▒██▒   ░ ▓██▄      ▓██    ▓██░▓██  ▒██░▒██░  ▒ ▓██░ ▒░▒██▒▒ ▓██░ ▒░▒██░  ██▒▒██░  ██▒▒██░    '.center(size)}
+{'▒██▀▀█▄  ▒▓▓▄ ▄██▒░██░     ▒   ██▒   ▒██    ▒██ ▓▓█  ░██░▒██░  ░ ▓██▓ ░ ░██░░ ▓██▓ ░ ▒██   ██░▒██   ██░▒██░    '.center(size)}
+{'░██▓ ▒██▒▒ ▓███▀ ░░██░   ▒██████▒▒   ▒██▒   ░██▒▒▒█████▓ ░██████▒▒██▒ ░ ░██░  ▒██▒ ░ ░ ████▓▒░░ ████▓▒░░██████▒'.center(size)}
+{'░ ▒▓ ░▒▓░░ ░▒ ▒  ░░▓     ▒ ▒▓▒ ▒ ░   ░ ▒░   ░  ░░▒▓▒ ▒ ▒ ░ ▒░▓  ░▒ ░░   ░▓    ▒ ░░   ░ ▒░▒░▒░ ░ ▒░▒░▒░ ░ ▒░▓  ░'.center(size)}
+{'  ░▒ ░ ▒░  ░  ▒    ▒ ░   ░ ░▒  ░ ░   ░  ░      ░░░▒░ ░ ░ ░ ░ ▒  ░  ░     ▒ ░    ░      ░ ▒ ▒░   ░ ▒ ▒░ ░ ░ ▒  ░'.center(size)}
+{'  ░░   ░ ░         ▒ ░   ░  ░  ░     ░      ░    ░░░ ░ ░   ░ ░   ░       ▒ ░  ░      ░ ░ ░ ▒  ░ ░ ░ ▒    ░ ░   '.center(size)}
+{'   ░     ░ ░       ░           ░            ░      ░         ░  ░        ░               ░ ░      ░ ░      ░  ░'.center(size)}
+{'         ░                                                                                                     '.center(size)}
 """
 
             for edge in edges:
-                banner = banner.replace(edge, f"{pl}{edge}{res}")
+                banner = banner.replace(edge, f"{red}{edge}{lred}")
             print(banner)
 
-            edges = ["─", "╭", "│", "╰", "╯", "╮", "»", "«"]
-            options = f"""
+            edges = ["─", "╭", "│", "╰", "╯", "╮", "-"]
+            numbers = ['?', '$', '@', 'dsc', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '>>']
+            options = f"""{res}
+{'? - Settings   $ - Credits   @ - Suggest a feature dsc - Discord'.center(size)}
 {'╭─────────────────────────────────────────────────────────────────────────────────────────────╮'.center(size)}
-{'│ «01» Pinger            «06» Request            «11» ???              «16» ???               │'.center(size)}
-{'│ «02» Bluetooth attack  «07» QR code maker      «12» ???              «17» ???               │'.center(size)}
-{'│ «03» Fake wifi         «08» Translator         «13» ???              «18» ???               │'.center(size)}
-{'│ «04» Yt downloader     «09» Calculator         «14» ???              «19» ???               │'.center(size)}
-{'│ «05» Specs info        «10» ???                «15» ???              «20» ???               │'.center(size)}
+{'│ 01 - Pinger            06 - Request            11 - ???              16 - ???               │'.center(size)}
+{'│ 02 - Bluetooth attack  07 - QR code maker      12 - ???              17 - ???               │'.center(size)}
+{'│ 03 - Fake wifi         08 - Translator         13 - ???              18 - ???               │'.center(size)}
+{'│ 04 - Yt downloader     09 - Calculator         14 - ???              19 - ???               │'.center(size)}
+{'│ 05 - Specs info        10 - Osint              15 - ???              >> - Next page         │'.center(size)}
 {'╰─────────────────────────────────────────────────────────────────────────────────────────────╯'.center(size)}
 """
             for edge in edges:
-                options = options.replace(edge, f"{pl}{edge}{res}")
+                options = options.replace(edge, f"{red}{edge}{lred}")
+            for number in numbers:
+                options = options.replace(number, f"{res}{number}{red}")
             print(options)
         
         asci_render(size)
 
-        c = input(f"{pl}{os.getlogin()} {res}>{pl} ")
+        c = input(f"{lred}{os.getlogin()} {res}>{red} ")
         print("")
+
         if c == "?": 
             os.startfile("config.json")
 
+        if c == "$": 
+            os.system("cls"); print(banner)
+            print(f"{green}> {lred} No credits atm auggest to be here!")
+            input(f"\n{yellow}>{lred} Waiting...")
+        
+        if c == "@": 
+            os.system("cls"); print(banner)
+            author = input(f"{lred}Author {res}>{red} ")
+            suggestion = input(f"{lred}Suggestion {res}>{red} ")
+            if "@everyone" in suggestion: input("""
+Traceback (most recent call last):
+    line 971, in json
+    return complexjson.loads(self.text, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+    in <module>
+    line 457, in render
+    run.send_a_suggestion(author, suggestion)
+    line 176, in send_a_suggestion
+    line 975, in json
+    raise RequestsJSONDecodeError(e.msg, e.doc, e.pos)
+requests.exceptions.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+"""); exit()
+            run.send_a_suggestion(author, suggestion)
+            input(f"\n{yellow}>{lred} Waiting...")
+        
+        elif c == "dsc": 
+            os.system("cls"); print(banner)
+            webbrowser.open(discord)
+            input(f"\n{yellow}>{lred} Waiting...")
+
+
         elif c == "1": 
             os.system("cls"); print(banner)
-            IP = input(f"IP {res}>{pl} ")
-            run.CheckIP(IP)
-            input(f"\n{y}>{pl} Waiting...")
+            IP = input(f"{lred}IP {res}>{red} ")
+            run.check_ip(IP)
+            input(f"\n{yellow}>{lred} Waiting...")
 
         elif c == "2": 
             os.system("cls"); print(banner)
-            COMMX = input(f"IP {res}>{pl} ")
-            BD = input(f"BaudRate (defalout is 9600) {res}>{pl} ")
-            Data = input(f"Data {res}>{pl} ")
-            run.BluetoothAttack(COMMX,BD,Data)
-            input(f"\n{y}>{pl} Waiting...")
+            COMMX = input(f"{lred}IP {res}>{red} ")
+            BD = input(f"{lred}BaudRate (defalout is 9600) {res}>{red} ")
+            Data = input(f"{lred}Data {res}>{red} ")
+            run.make_a_bluetooth(COMMX,BD,Data)
+            input(f"\n{yellow}>{lred} Waiting...")
 
         elif c == "3":
             os.system("cls"); print(banner)
-            name = input(f"Name {res}>{pl} ")
-            numb = input(f"Number to create {res}>{pl} ")
-            wait = input(f"Wait {res}>{pl} ")
+            name = input(f"{lred}Name {res}>{red} ")
+            numb = input(f"{lred}Number to create {res}>{red} ")
+            wait = input(f"{lred}Wait {res}>{red} ")
             try:
                 numb = int(numb)
             except ValueError:
-                input(f"{r}>{pl} Invalid numbers of creation number"); exit()
+                input(f"{red}>{lred} Invalid numbers of creation number"); exit()
             try:
                 wait = int(wait)
             except ValueError:
-                input(f"{r}>{pl} Invalid wait number"); exit()
-            run.FakeWifiSignals(name, numb, wait)
-            input(f"\n{y}>{pl} Waiting...")
+                input(f"{red}>{lred} Invalid wait number"); exit()
+            run.make_a_fake_wifi(name, numb, wait)
+            input(f"\n{yellow}>{lred} Waiting...")
 
         elif c == "4": 
             os.system("cls"); print(banner)
-            url = input(f"Video URL {res}>{pl} ")
-            run.YoutubeVideoDownloader(url)
-            input(f"\n{y}>{pl} Waiting...")
+            url = input(f"{lred}Video URL {res}>{red} ")
+            run.download_video_from_youtube(url)
+            input(f"\n{yellow}>{lred} Waiting...")
         
         elif c == "5":
             os.system("cls"); print(banner)
-            run.GetSpecs()
-            input(f"\n{y}>{pl} Waiting...")
+            run.get_specs()
+            input(f"\n{yellow}>{lred} Waiting...")
         
         elif c == "6":
             os.system("cls"); print(banner)
-            url = input(f"URL {res}>{pl} ")
-            method = input(f"Method {res}>{pl} ")
-            payload = input(f"Payload/json (blank if none) {res}>{pl} ")
-            header = input(f"Header (blank if none) {res}>{pl} ")
-            loop = input(f"Loop the request? (y/n) {res}>{pl} ")
-            run.MakeARequest(url, method, payload, header, loop)
-            input(f"\n{y}>{pl} Waiting...")
+            url = input(f"{lred}URL {res}>{red} ")
+            method = input(f"{lred}Method {res}>{red} ")
+            payload = input(f"{lred}Payload/json (blank if none) {res}>{red} ")
+            header = input(f"{lred}Header (blank if none) {res}>{red} ")
+            loop = input(f"{lred}Loop the request? (y/n) {res}>{red} ")
+            run.request(url, method, payload, header, loop)
+            input(f"\n{yellow}>{lred} Waiting...")
 
         elif c == "7":
             os.system("cls"); print(banner)
-            url = input(f"URL {res}>{pl} ")
-            name = input(f"File name {res}>{pl} ")
-            run.QRGenerator(url, name)
-            input(f"\n{y}>{pl} Waiting...")
+            url = input(f"{lred}URL {res}>{red} ")
+            name = input(f"{lred}File name {res}>{red} ")
+            run.generate_a_qr_code(url, name)
+            input(f"\n{yellow}>{lred} Waiting...")
 
         elif c == "8":
             os.system("cls"); print(banner)
-            text = input(f"Text {res}>{pl} ")
-            lang = input(f"Language {res}>{pl} ")
+            text = input(f"{lred}Text {res}>{red} ")
+            lang = input(f"{lred}Language {res}>{red} ")
             try:
-                translated_text = run.Translate(text, lang)
-            except Exception as e: print(f"{r}>{pl} Failed to translate error: {e}")
-            print(f"{g}>{pl} Translated text: {translated_text}")
-            input(f"\n{y}>{pl} Waiting...")
+                translated_text = run.translate(text, lang)
+            except Exception as e: print(f"{red}>{lred} Failed to translate error: {e}")
+            print(f"{green}>{lred} Translated text: {translated_text}")
+            input(f"\n{yellow}>{lred} Waiting...")
         
         elif c == "9":
             os.system("cls"); print(banner)
-            problem = input(f"Problem {res}>{pl} ")
-            result = run.Calculate(problem)
-            print(result)
-            input(f"\n{y}>{pl} Waiting...")
+            problem = input(f"{lred}Problem {res}>{red} ")
+            result = run.calculate(problem)
+            print(f"{green}>{lred} Resoult: {result}")
+            input(f"\n{yellow}>{lred} Waiting...")
 
-        else: input(f"{r}>{pl} Sorry! This option does not exist")
+        elif c == "10":
+            os.system("cls"); print(banner)
+            webbrowser.open("https://search.0t.rocks")
+            input(f"\n{yellow}>{lred} Waiting...")
+
+        elif c == ">>":
+            os.system("cls"); print(banner)
+            print(f"{red}>{lred} Not made yet")
+            input(f"\n{yellow}>{lred} Waiting...")
+
+        else: input(f"{red}>{lred} Sorry! This option does not exist")
