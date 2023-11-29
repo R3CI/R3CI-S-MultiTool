@@ -72,4 +72,6 @@
 Type the chosen option and input any things if needed 
 
 ```bash
-# Example commands or code snippets
+
+## ⚠️ DISCLAIMER
+This github repo is for EDUCATIONAL PURPOSES ONLY. I am NOT under any responsibility if a problem occurs.
