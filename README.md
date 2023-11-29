@@ -12,7 +12,6 @@
   <img src="https://img.shields.io/github/stars/R3CI/R3CI-S-MULTITOOL?color=darkred">
   <img src="https://img.shields.io/discord/1157405821450338334?color=darkred">
   <img src="https://img.shields.io/github/repo-size/R3CI/R3CI-S-MultiTool?color=darkred">
-  <img src="https://img.shields.io/discord/1157405821450338334?color=darkred">
 </p>
 
 ## Table of Contents
