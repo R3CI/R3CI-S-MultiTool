@@ -72,4 +72,4 @@ Type the chosen option and input any things if needed
 
 
 ## ⚠️ DISCLAIMER
-This github repo is for EDUCATIONAL PURPOSES ONLY. I am NOT under any responsibility if a problem occurs.
+**This github repo is for EDUCATIONAL PURPOSES ONLY. I am NOT under any responsibility if a problem occurs.**
