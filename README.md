@@ -14,13 +14,13 @@
   <img src="https://img.shields.io/github/repo-size/R3CI/R3CI-S-MultiTool?color=darkred">
 </p>
 
-## Table of Contents
+## 🔗 Table of Contents
 
 - [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
 
-## Features
+## 👾 Features
 
 - **Pinger** Check a url or a ip
 - **???**
@@ -36,7 +36,7 @@
 - **Clock** See the current time
 - **Proxy scraper** Get some proxies
 
-## Installation
+## 🚨 Installation
 
 1. Clone the repository:
 
@@ -62,7 +62,7 @@
     py main.py
     ```
 
-## Usage
+## ✍️ Usage
 
 <p align="center">
   <img src="https://i.imgur.com/yl5iCfE.png" alt="R3CI'S Multitool Screenshot" width="1000">
