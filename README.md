@@ -1,19 +1,75 @@
-<h1 align="center">
+<p align="center">
+  <img src="https://i.imgur.com/Kg62cJj.png" alt="R3CI'S Multitool Logo" width="200">
+</p>
+
+<p align="center">
   R3CI'S Multitool
-</h1>
-<h1 align="center">
-  ⚠ THIS IS A BETA! ⚠
-</h1>
+</p>
+<p align="center">
+  A tool what will make your life easier
+</p>
+<p align="center">
+  <img src="https://img.shields.io/github/stars/R3CI/R3CI-S-MULTITOOL?color=darkred">
+  <img src="https://img.shields.io/discord/1157405821450338334?color=darkred">
+  <img src="https://img.shields.io/github/repo-size/R3CI/R3CI-S-MultiTool?color=darkred">
+  <img src="https://img.shields.io/discord/1157405821450338334?color=darkred">
+</p>
 
-<h1 align="center">
-  Preview (V1.5)
-</h1>
+## Table of Contents
 
-<div align="center">
-     <img  src="https://cdn.discordapp.com/attachments/1175839876055314562/1178762443418255391/image.png?ex=65775312&is=6564de12&hm=28dd1974f979c04d2a89bd1b886356a4e9fc987763c18ee36ab261f9e2aab187&">
-</div>
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](##usage)
 
+## Features
 
-<h1 align="center">
- ⚠ Made for education purpuses only ⚠
-</h1>
+- **Pinger** Check a url or a ip
+- **???**
+- **???**
+- **Youtube video downloader** Download any video from youtube u want
+- **Specs info** Get a list of all ur specs
+- **Request** Make a simple request wighout typing any code
+- **QR code maker** Create ur own qr code that will take you to ur website
+- **Translator** Translate any word you want
+- **Calculator** Calculate basic problems
+- **Osint** Search for somones info in the database
+- **Token login** Login into a discord token with ease
+- **Clock** See the current time
+- **Proxy scraper** Get some proxies
+
+## Installation
+
+1. Clone the repository:
+
+    ```bash
+    git clone https://github.com/R3CI/R3CIS-Multitool.git
+    ```
+
+2. Navigate to the project directory:
+
+    ```bash
+    cd R3CIS-Multitool
+    ```
+
+3. Install dependencies:
+
+    ```bash
+    py main.py
+    ```
+
+4. Run the multitool:
+
+    ```bash
+    py main.py
+    ```
+
+## Usage
+
+<p align="center">
+  <img src="https://i.imgur.com/yl5iCfE.png" alt="R3CI'S Multitool Screenshot" width="1000">
+</p>
+
+Type the chosen option and input any things if needed 
+
+```bash
+# Example commands or code snippets
