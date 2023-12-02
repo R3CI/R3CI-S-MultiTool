@@ -2,10 +2,11 @@ import ctypes
 import os
 ctypes.windll.kernel32.SetConsoleTitleW("Loading...")
 print("Loading... please wait")
-version = "1.6"
+version = "1.7"
 discord = "https://discord.gg/vTsvhtNR"
 try:
     from googletrans import Translator
+    from bs4 import BeautifulSoup
     from pytube import YouTube
     from colorama import Fore
     import subprocess
@@ -110,7 +111,7 @@ class Create:
     def make_file_and_write():
         files = [
             "config.json",
-            "READ.txt"
+            "READ.txt",
         ]
         for file in files:
             if os.path.exists(file): pass 
@@ -247,6 +248,46 @@ class run:
         try: return result
         except: pass
 
+    def get_socks_prx():
+        try:
+            r = requests.get("https://www.socks-proxy.net/",)
+            soup = BeautifulSoup(r.text, 'html.parser')
+            part = soup.find('tbody')
+            proxies = ""
+
+            for row in part.find_all('tr'):
+                columns = row.find_all('td')
+                try:
+                    proxies += columns[0].text + ":" + columns[1].text + "\n"
+                except IndexError:
+                    pass
+
+            return proxies
+        except: return "N/A"
+    def get_https_prx():
+        try:
+            r = requests.get("http://free-proxy-list.net/",)
+            soup = BeautifulSoup(r.text, 'html.parser')
+            part = soup.find('tbody')
+            proxies = ""
+
+            for row in part.find_all('tr'):
+                columns = row.find_all('td')
+                try:
+                    proxies += columns[0].text + ":" + columns[1].text + "\n"
+                except IndexError:
+                    pass
+
+            return proxies
+        except: return "N/A"
+
+        # Discord section #
+        # Discord section #
+        # Discord section #
+    
+
+        
+
 class render:
     subprocess.check_call('mode con: cols=150 lines=30', shell=True)
     def title():
@@ -280,6 +321,7 @@ class render:
                 banner = banner.replace(edge, f"{red}{edge}{lred}")
             print(banner)
             options = f"""{res}
+{'─── Main section ───'.center(size)}
 {'? - Settings  |  $ - Credits  |  ! - Discord  |  % - exit'.center(size)}
 {'╭─────────────────────────────────────────────────────────────────────────────────────────────╮'.center(size)}
 {'│ 01 - Pinger            06 - Request            11 - Token login      16 - ???               │'.center(size)}
@@ -296,19 +338,21 @@ class render:
             print(options)
         
             options2 = f"""{res}
+{'─── Discord section ───'.center(size)}
+{'? - Settings  |  $ - Credits  |  ! - Discord  |  % - exit'.center(size)}
 {'╭─────────────────────────────────────────────────────────────────────────────────────────────╮'.center(size)}
-{'│ 20 - ???               25 - ???                30 - ???              35 - ???               │'.center(size)}
-{'│ 21 - ???               26 - ???                31 - ???              36 - ???               │'.center(size)}
-{'│ 22 - ???               27 - ???                32 - ???              37 - ???               │'.center(size)}
-{'│ 23 - ???               28 - ???                33 - ???              38 - ???               │'.center(size)}
-{'│ 24 - ???               29 - ???                34 - ???              << - Return            │'.center(size)}
+{'│ 20 - Token Nuker (SOON)25 - ???                30 - ???              00 - ???               │'.center(size)}
+{'│ 21 - ???               26 - ???                00 - ???              00 - ???               │'.center(size)}
+{'│ 22 - ???               27 - ???                00 - ???              00 - ???               │'.center(size)}
+{'│ 23 - ???               28 - ???                00 - ???              00 - ???               │'.center(size)}
+{'│ 24 - ???               29 - ???                00 - ???              << - Return            │'.center(size)}
 {'╰─────────────────────────────────────────────────────────────────────────────────────────────╯'.center(size)}
 """
             for edge in ["─", "╭", "│", "╰", "╯", "╮", "-"]:
                 options2 = options2.replace(edge, f"{red}{edge}{lred}")
-            for number in ['?', '$', '@', '!', '%', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '>>']:
+            for number in ['?', '$', '@', '!', '%', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '2212313', '13', '14', '15', '16', '17', '18', '19', '>>']:
                 options2 = options2.replace(number, f"{res}{number}{red}")
-        
+                
         asci_render(size)
 
         c = input(f"{lred}{os.getlogin()} {res}>{red} ")
@@ -319,7 +363,7 @@ class render:
 
         if c == "$": 
             os.system("cls"); print(banner)
-            print(f"{green}> {lred} No credits atm auggest to be here!")
+            print(f"{green}> {lred} No credits atm suggest to be here!")
             input(f"\n{yellow}>{lred} Waiting...")
         
         elif c == "!": 
@@ -336,13 +380,13 @@ class render:
             run.check_ip(IP)
             input(f"\n{yellow}>{lred} Waiting...")
 
-        #elif c == "2": 
-        #    os.system("cls"); print(banner)
-        #    input(f"\n{yellow}>{lred} Waiting...")
+#        elif c == "2": 
+#            os.system("cls"); print(banner)
+#            input(f"\n{yellow}>{lred} Waiting...")
 
-        #elif c == "3":
-        #    os.system("cls"); print(banner)
-        #    input(f"\n{yellow}>{lred} Waiting...")
+#        elif c == "3":
+#            os.system("cls"); print(banner)
+#           input(f"\n{yellow}>{lred} Waiting...")
 
         elif c == "4": 
             os.system("cls"); print(banner)
@@ -409,7 +453,31 @@ class render:
                 clock = f"{f'{red}{timee}'.center(size)}"
                 for dwukropek in [":"]:
                     clock = clock.replace(dwukropek, f"{res}{dwukropek}{red}")
-                print(clock)      
+                print(clock)
+
+        elif c == "13":
+            os.system("cls"); print(banner)
+            prx_type = input(f"{lred}Proxy type (1 - HTTPS 2 - SOCKS) {res}>{red} ")
+            if prx_type == "1": proxies = run.get_https_prx()
+            elif prx_type == "2": proxies = run.get_socks_prx()
+            else: input(f"{red}>{lred} Not an option")
+            try: 
+                with open("data/ProxyScraper/proxies.txt", "w") as f:
+                    f.write(proxies)
+                os.startfile("data\ProxyScraper\proxies.txt")
+            except Exception as e: input(f"\n{red}>{lred} Failed to write proxies to the file {e}")
+            input(f"\n{yellow}>{lred} Waiting...")
+            
+
+        # Discord section #
+        # Discord section #
+        # Discord section #
+
+        elif c == "20":
+            os.system("cls"); print(banner)
+            token = input(f"{lred}token {res}>{red} ")
+
+            input(f"\n{yellow}>{lred} Waiting...")
 
         elif c == ">>":
             os.system("cls"); print(banner)
@@ -418,6 +486,6 @@ class render:
             if c == "<<":
                  print(options)
             elif c == "22":
-                input("works")
+               input("works")
 
         else: input(f"{red}>{lred} Sorry! This option does not exist")
