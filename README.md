@@ -21,7 +21,7 @@
 - [Usage](#usage)
 
 ## 👾 Features
-
+**MAIN SECTION**
 - **Pinger** Check a url or a ip
 - **???**
 - **???**
@@ -35,6 +35,10 @@
 - **Token login** Login into a discord token with ease
 - **Clock** See the current time
 - **Proxy scraper** Get some proxies
+
+**DISCORD SECTION**
+
+Soon
 
 ## 🚨 Installation
 
