@@ -1,3 +1,5 @@
+# Project ended i will not do any more updates
+
 <p align="center">
   <img src="https://i.imgur.com/Kg62cJj.png" alt="R3CI'S Multitool Logo" width="200">
 </p>
